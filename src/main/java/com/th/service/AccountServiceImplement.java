@@ -3,6 +3,7 @@ package com.th.service;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,13 @@ import com.th.entities.AppUser;
 @Transactional
 public class AccountServiceImplement implements AccountService {
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Bean
+	// avoir un BCryptEncoder qui est initialisé une et une seule fois
+	public BCryptPasswordEncoder getBCPE()
+	{
+		return new BCryptPasswordEncoder();
+		
+	}
 	@Autowired
 	UserRepository userRepository;
 	@Autowired 
@@ -26,7 +32,7 @@ public class AccountServiceImplement implements AccountService {
 	public AppUser saveUser(AppUser appUser) {
 		// TODO Auto-generated method stub
 		
-		String hashPW=bCryptPasswordEncoder.encode(appUser.getPassword()); //hashPW = le mot de passe crypté
+		String hashPW=this.getBCPE().encode(appUser.getPassword()); //hashPW = le mot de passe crypté
 		System.out.print(hashPW);
 		appUser.setPassword(hashPW);
 		return userRepository.save(appUser);

@@ -16,6 +16,14 @@ public void setRoleName(String roleName) {
 	this.roleName = roleName;
 }
 
+public AppRole() {
+	// TODO Auto-generated constructor stub
+}
+
+public AppRole(String roleName) {
+	this.roleName = roleName;
+}
+
 
 
 

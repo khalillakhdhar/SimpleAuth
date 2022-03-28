@@ -21,6 +21,22 @@ private int active;
 @ManyToMany(fetch = FetchType.EAGER)
 private Collection<AppRole> roles=new ArrayList<>();
 
+
+
+
+public AppUser() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+public AppUser(String username, @NotNull String password, @NotNull int active, Collection<AppRole> roles) {
+	super();
+	this.username = username;
+	this.password = password;
+	this.active = active;
+	this.roles = roles;
+}
+
 public String getUsername() {
 	return username;
 }

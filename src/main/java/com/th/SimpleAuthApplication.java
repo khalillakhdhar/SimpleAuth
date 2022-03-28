@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.th.dao.TaskRepository;
+import com.th.entities.AppRole;
+import com.th.entities.AppUser;
 import com.th.entities.Task;
 import com.th.service.AccountServiceImplement;
 
@@ -24,18 +26,24 @@ public class SimpleAuthApplication implements CommandLineRunner {
 		SpringApplication.run(SimpleAuthApplication.class, args);
 	}
 	
-	@Bean
-	// avoir un BCryptEncoder qui est initialisé une et une seule fois
-	public BCryptPasswordEncoder getBCPE()
-	{
-		return new BCryptPasswordEncoder();
-		
-	}
+//	@Bean
+//	// avoir un BCryptEncoder qui est initialisé une et une seule fois
+//	public BCryptPasswordEncoder getBCPE()
+//	{
+//		return new BCryptPasswordEncoder();
+//		
+//	}
 
 	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		accountServiceImplement.saveUser(new AppUser("admin", "1234", 1, null));
+		accountServiceImplement.saveUser(new AppUser("user", "teste", 1, null));
+		accountServiceImplement.saveRole(new AppRole("ADMIN"));
+		accountServiceImplement.saveRole(new AppRole("USER"));
+		accountServiceImplement.addRoleToUser("admin", "ADMIN");
+		accountServiceImplement.addRoleToUser("user", "USER");
 		
 		
 		
