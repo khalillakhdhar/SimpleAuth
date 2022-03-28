@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	//pour la config de la mode d'authentification
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws
 	Exception {
@@ -23,9 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception { 
 		http.formLogin();
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/login/**","register/**").permitAll();
-		http.authorizeRequests().antMatchers(HttpMethod.POST,"/tasks/**").hasRole("ADMIN");
-		http.authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests().antMatchers("/login/**","register/**").permitAll(); // les url sont autorisé pour tout le monde 
+		http.authorizeRequests().antMatchers(HttpMethod.POST,"/tasks/**").hasRole("ADMIN"); // POST à l'url tasks/**  peut être effectuer uniquement par l'admin
+		http.authorizeRequests().anyRequest().authenticated(); // autoriser l'accés des autres routage si l'utilisateur est authentifié
 		
 		
 	}
