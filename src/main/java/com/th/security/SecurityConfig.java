@@ -42,8 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception { 
 		http.formLogin();
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/login/**","register/**").permitAll(); // les url sont autorisé pour tout le monde (sans authentification)
+		http.authorizeRequests().antMatchers("/login/**","register/**","/").permitAll(); // les url sont autorisé pour tout le monde (sans authentification)
+		
 		http.authorizeRequests().antMatchers(HttpMethod.POST,"/tasks/**").hasRole("ADMIN"); // POST à l'url tasks/**  peut être effectuer uniquement par l'admin
+		http.authorizeRequests().antMatchers(HttpMethod.GET,"/tasks/{id}").hasRole("ADMIN");
 		http.authorizeRequests().anyRequest().authenticated(); // autoriser l'accés des autres routage si l'utilisateur est authentifié
 		
 		
