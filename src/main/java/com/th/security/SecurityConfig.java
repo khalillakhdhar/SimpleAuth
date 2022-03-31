@@ -3,8 +3,10 @@ package com.th.security;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+	  @Bean
+	    public AuthenticationManager customAuthenticationManager() throws Exception {
+	        return authenticationManager();
+	    }
+
+	  
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws
@@ -36,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 								+ "where app_user_username=?")
 				.passwordEncoder(bCryptPasswordEncoder).rolePrefix("ROLE_");
 		// formatage pour la lisibilité 
+
 	}
 	// Pour les autorisations
 	@Override
